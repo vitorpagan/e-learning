@@ -1,0 +1,116 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<h1>Dashboard</h1>
+
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Usuários Criados Por Dia</a></li>
+  <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Pedidos Criados Por Dia</a></li>
+  <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Aulas Pagas Por dia</a></li>
+  <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Módulos Pagos Por dia</a></li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="home">
+    <div class="row">
+      <div class="col-md-6">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Quantidade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users_dates = []; @users_values = [] %>
+            <% @users_created_by_day.each do |date, quantity| %>
+              <% @users_dates.push(date.day) %>
+              <% @users_values.push(quantity) %>
+              <tr>
+                <td><%= l(date, format: :short) %></td>
+                <td><%= quantity %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-6 text-center">
+        <canvas id="myChart" width="400" height="400" style="margin-top: 20px;"></canvas>
+        <script>
+          var data = {
+            labels: <%= @users_dates.reverse %>,
+            datasets: [
+                {
+                    label: "Novos Usuários",
+                    fillColor: "rgba(204, 12, 57,0.5)",
+                    strokeColor: "rgba(204, 12, 57,0.8)",
+                    highlightFill: "rgba(204, 12, 57,0.75)",
+                    highlightStroke: "rgba(204, 12, 57,1)",
+                    data: <%= @users_values.reverse %>
+                }
+            ]
+          };
+          var ctx = document.getElementById("myChart").getContext("2d");
+          var myBarChart = new Chart(ctx).Bar(data, {});
+        </script>
+      </div>
+    </div>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="profile">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Quantidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders_created_by_day.each do |date, quantity| %>
+          <tr>
+            <td><%= l(date, format: :short) %></td>
+            <td><%= quantity %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="messages">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Quantidade</th>
+          <!-- <th>Valor</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <% @video_classes_payed_by_day.each_with_index do |value, index| %>
+          <tr>
+            <td><%= l(value[0], format: :short) %></td>
+            <td><%= value[1] %></td>
+            <!-- <td><%= @video_classes_value_by_day[index][1] %> </td> -->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="settings">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Quantidade</th>
+          <!-- <th>Valor</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <% @courses_payed_by_day.each_with_index do |value, index| %>
+          <tr>
+            <td><%= l(value[0], format: :short) %></td>
+            <td><%= value[1] %></td>
+            <!-- <td><%= @courses_value_by_day[index][1] %> </td> -->
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

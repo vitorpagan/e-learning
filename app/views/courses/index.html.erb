@@ -1,0 +1,153 @@
+<div class="container-fluid">
+  <div class="row relative">
+    <div class="col-md-3 sidebar hidden-xs">
+      <%= form_tag(courses_path, method: "get") %>
+        <div class="sidebar-filters-content" data-sidebar-filters-content>
+          <h2>Filtre os cursos...</h2>
+          <h3>por Categoria:</h3>
+          <ul>
+            <% Category.where(parent_id: nil).each do |category| %>
+              <li class="category">
+                <label>
+                  <input type="checkbox" name="category[]" value="<%= category.id %>" <%= 'checked="checked"' if params['category'] && params['category'].index(category.id.to_s).present? %>/>
+                  <%= category.name %>
+                </label>
+              </li>
+              <% category.categories.each do |subcategory| %>
+                <li class="subcategory">
+                  <label>
+                    <input type="checkbox" name="category[]" value="<%= subcategory.id %>" data-parent-category-id="<%= category.id %>"  <%= 'checked="checked"' if params['category'] && params['category'].index(subcategory.id.to_s).present? %>/>
+                    <%= subcategory.name %>
+                  </label>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+          <h3>por Nível de Dificuldade:</h3>
+          <ul>
+            <% Level.all.each do |level| %>
+              <li><label><input type="checkbox" name="level[]" value="<%= level.id %>" <%= 'checked="checked"' if params['level'] && params['level'].index(level.id.to_s).present? %>/> <%= level.name %></label></li>
+            <% end %>
+          </ul>
+          <div class="action text-center">
+            <input type="submit" value="Filtrar" class="btn btn-primary" />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-9 content">
+      <div data-courses-container class="courses-container">
+        <div class="filter-container">
+          <div class="row">
+            <div class="col-md-6">
+              <% if @courses.empty? %>
+                <h4>Nenhum módulo encontrado. Por favor, verifique os filtros utilizados.</h4>
+              <% elsif @courses.size == 1 %>
+                <h4><%= @courses.size %> módulo encontrado</h4>
+              <% else %>
+                <h4><%= @courses.size %> módulos encontrados</h4>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <% @courses.where(active: true).order("order_number asc").each do |course| %>
+            <% if course.category.parent %>
+              <div class="col-md-4 <%= course.category.parent.identifier %> course-box">
+            <% else %>
+              <div class="col-md-4 <%= course.category.identifier %> course-box">
+            <% end %>
+              <div class="box box-course-home" data-course-box style="height: 755px;">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12 header">
+                    <h4><%= course.category.parent.name if course.category.parent %></h4>
+                    <h3><%= course.category.name %></h3>
+                  </div>
+<!--                   <div class="col-md-4 col-sm-4 col-xs-4">
+                    <span class="category-icon glyphicon glyphicon-fire pull-right"></span>
+                  </div> -->
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="thumbnail">
+                      <%= link_to course_path(course), title: course.name do %>
+                        <%= image_tag(course.thumbnail) %>
+                      <% end %>
+                    </div>
+                    <div class="caption" style="height: 215px;">
+                      <h2><%= link_to course.name, course_path(course), title: course.name %></h2>
+                      <p><%= course.description[0..200] %>...<b>[leia +]</b></p>
+                      <p><strong>Nível:</strong> <%= course.level.name %> / <strong>Aulas:</strong> <%= course.video_classes.size %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-12 text-left course-price"><strong>12x de <%= number_to_currency(course.price / 12) %></strong></div>
+                  <div class="col-md-12 text-left" style="padding-bottom: 20px;"><strong>TOTAL: <%= number_to_currency(course.price) %></strong></div>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                     <p><%= link_to 'VER DETALHES', course_path(course), title: course.name, class: 'btn btn-list-course btn-primary btn-lg' %></p>
+                     <p><%= link_to 'COMPRAR O MÓDULO', shopping_cart_item_adicionar_path(course, type: 'course'), class: 'btn btn-list-course btn-primary btn-lg' %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id="courses-template" type="text/x-handlebars-tmpl">
+  <div class="filter-container">
+    <div class="row">
+      <div class="col-md-6">
+        <h4>{{courses.length}} módulos encontrados</h4>
+      </div>
+    </div>
+  </div>
+  {{#greater-than courses.length 0}}
+    <div class="row">
+      {{#each courses}}
+        {{#if category.parent }}
+          <div class="col-md-4 {{ category.parent.identifier }} course-box">
+        {{else}}
+          <div class="col-md-4 {{ category.identifier }} course-box">
+        {{/if}}
+          <div class="box" data-course-box>
+            <div class="row">
+              <div class="col-md-8 header">
+                <h4>{{category.name}}</h4>
+                <h3>{{#if category.parent }} {{category.parent.name}} {{/if}}</h3>
+              </div>
+              <div class="col-md-4">
+                <span class="category-icon glyphicon glyphicon-fire pull-right"></span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="full-width">
+                  <a href="<%= course_path(':slug').sub(/:slug/, '{{slug}}') %>" title="{{ name }}">
+                    <img src="{{ thumbnail.thumbnail.url }}"/>
+                  </a>
+                </div>
+                <h2><a href="<%= course_path(':slug').sub(/:slug/, '{{slug}}') %>" title="{{ name }}">{{ name }}</a></h2>
+                <p>{{ description }}</p>
+                <p><strong>Nível:</strong> {{ level.name }}</p>
+              </div>
+              <div class="col-md-6">{{ video_classes_count }} Aulas</div>
+              <div class="col-md-6 text-right"><strong>R{{ format-currency price }}</strong></div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/greater-than}}
+</script>
+
+<script>
+  $('body').on('ajax:success', '.sidebar form', function(ev, response){
+    var coursesHTML = Handlebars.compile($('#courses-template').html());
+    var sidebarHTML = coursesHTML({ courses: response.courses });
+    $('[data-courses-container]').html(sidebarHTML);
+    console.info(response);
+  });
+</script>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Olá <strong><%= @user.name %></strong>,</p>
+    <p>Registramos com sucesso o seu pedido, realizado em <%= l(Time.current, format: :full) %>, através do site Foo Bar. A partir de agora você receberá todas as etapas da sua compra por e-mail.</p>
+
+    <p>Após a confirmação de pagamento, o acesso será liberado de acordo com as informações abaixo: </p>
+
+    <h3>RESUMO DO PEDIDO</h3>
+    <% @order.shopping_cart.shopping_cart_items.each do |item| %>
+      <% if item.course_id %>
+        <strong>Módulo:</strong> <%= item.course.name %><br />
+      <% else %>
+        <strong>Aula:</strong> <%= item.video_class.title %><br />
+      <% end %>
+    <% end %>
+    <h4>Valor Total: <%= number_to_currency(@order.shopping_cart.total) %></h4>
+  </body>
+</html>

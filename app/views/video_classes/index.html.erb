@@ -1,0 +1,18 @@
+<div class="container category-3">
+  <div class="row">
+    <% @video_classes.each do |video_class| %>
+      <div class="col-md-4">
+        <div class="box">
+          <h3><%= link_to video_class.title, course_video_class_path(@course, video_class)%></h3>
+          <p><%= video_class.description %></p>
+          <p class="text-right"><%= duration(video_class.duration) %></p>
+          <p class="text-center">
+            <%= link_to course_video_class_path(@course, video_class) do %>
+              <button class="btn btn-info">Assistir</button>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

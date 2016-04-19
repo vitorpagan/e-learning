@@ -1,0 +1,35 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover;">
+  <div class="container">
+    <div class="row margin top bottom modules-list">
+      <% (Course.all).each do |course| %>
+        <div class="col-md-6 col-sm-12 col-xs-12">
+          <%= link_to course_path(course) do %>
+            <div class="module-box">
+              <div class="row">
+                <div class="col-md-6 col-xs-6 col-sm-6">
+                  <div class="module-box-title">
+                    <h4><%= course.name %></h4>
+                    <img src="https://educacaobeleza.s3.amazonaws.com/uploads/professional/thumbnail/4/photo.jpg" class="module-box-professional-thumbnail"/>Por: <strong>Foo Bazz</strong>
+                    <p class="module-box-description"><%= course.description[0..200] %></p>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <strong><%= course.video_classes.size %> aulas</strong>
+                      </div>
+                      <div class="col-md-6 text-right">
+                        <i class="glyphicon glyphicon-time"></i> <%= duration(course.duration) %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-6 col-sm-6">
+                  <%= image_tag(course.thumbnail, class: 'full-width') %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+</div>

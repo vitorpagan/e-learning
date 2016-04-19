@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-md-offset-2 col-md-8">
+    <h1><%= @professional.name %></h1>
+    <div class="form-group">
+      <label>Data de Criação:</label> <%= l(@professional.created_at, format: :full) %>
+    </div>
+    <div class="text-center">
+      <%= link_to 'Voltar', admin_professionals_path, class: 'btn btn-default' %> <%= link_to 'Editar', edit_admin_professional_path(@course), class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>

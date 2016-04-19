@@ -1,0 +1,255 @@
+<!-- <img src="<%= image_url('banner_home_1.jpg')%>" width="100%"/> -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 100%;">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" data-slide-to="3"></li>
+    </ol>
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <a href="/modulos/penteado-basico-1-classicos/aulas/coque-com-tranca">
+          <img src="<%= image_url('banner_home_4.jpg')%>" alt="">
+        </a>
+        <div class="carousel-caption">
+        </div>
+      </div>
+      <div class="item">
+        <a href="lista-aulas?price=19">
+          <img src="<%= image_url('banner_home_1.jpg')%>" alt="">
+        </a>
+        <div class="carousel-caption">
+        </div>
+      </div>
+      <div class="item">
+        <a href="/modulos">
+          <img src="<%= image_url('banner_home_2.jpg')%>" alt="">
+        </a>
+        <div class="carousel-caption">
+        </div>
+      </div>
+      <div class="item">
+        <a href="/modulos/phd-em-penteado">
+          <img src="<%= image_url('banner_home_3.jpg')%>" alt="">
+        </a>
+        <div class="carousel-caption">
+        </div>
+      </div>
+
+    </div>
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover;">
+  <section class="section section-primary section-primary-scale-2 section-center section-no-border mt-none p-sm" id="demos">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <ul class="nav nav-pills sort-source sort-source-style-2" data-sort-id="portfolio" data-option-key="filter">
+            <li class="active"><a href="#">CABELO</a></li>
+            <li class="inactive"><span data-toggle="tooltip" data-placement="top" title="EM BREVE">MAQUIAGEM</span></li>
+            <li class="inactive"><span data-toggle="tooltip" data-placement="top" title="EM BREVE">ESTÉTICA CORPORAL</span></li>
+            <li class="inactive"><span data-toggle="tooltip" data-placement="top" title="EM BREVE">ESTÉTICA FACIAL</span></li>
+            <li class="inactive"><span data-toggle="tooltip" data-placement="top" title="EM BREVE">UNHA</span></li>
+            <li class="inactive"><span data-toggle="tooltip" data-placement="top" title="EM BREVE">DEPILAÇÃO</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <div class="row margin top bottom modules-list">
+      <% (Course.where(active: true).order("order_number asc")).each do |course| %>
+        <!-- <div class="col-md-3 col-sm-4 col-xs-6 text-center margin bottom home-box">
+          <%= link_to course_path(course) do %>
+            <div class="home-module-box" style="position: relative;">
+              <div class="over">
+                <img src="<%= image_url('hover_box.png')%>" />
+              </div>
+              <div class="thumb-info-ribbon">
+                <span>Recomendado</span>
+              </div>
+              <%= image_tag(course.thumbnail, class: 'full-width') %>
+              <div class="home-module-box-name">
+                <img class="stars" src="<%= image_url('stars.png')%>" style="" />
+                <h4><%= course.name %></h4>
+              </div>
+            </div>
+          <% end %>
+        </div> -->
+        <div class="col-md-6 col-sm-12 col-xs-12 box-course-home-destaque">
+          <div class="row" style="padding: 0 15px; margin-bottom: 30px;">
+            <%= link_to course_path(course) do %>
+              <div class="col-md-6" style="background: #fff; height: 278px; padding: 15px; box-sizing: border-box;">
+                <h4><%= course.name %></h4>
+                <img src="https://educacaobeleza.s3.amazonaws.com/uploads/professional/thumbnail/4/photo.jpg" class="module-box-professional-thumbnail" height="40" width="40" />Por: <strong>Foo Bazz</strong>
+                <p class="module-box-description"><%= course.description[0..200] %>...<b>[leia +]</b></p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <strong><%= course.video_classes.size %> aulas</strong>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <i class="glyphicon glyphicon-time"></i> <%= duration(course.duration) %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" style="padding: 0; height: 278px; background: url(<%= course.thumbnail %>) top center; background-size: cover;">
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<section class="call-to-action call-to-action-primary mb-none">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="call-to-action-content align-left pb-md mb-xl ml-none">
+          <h2 class="text-color-light mb-none mt-xl">Conheça todos os módulos <strong>e comece a aprender já!</strong></h2>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="call-to-action-btn">
+          <a href="/modulos" class="btn btn-lg btn-primary btn-primary-scale-2 mr-md" style="text-transform: uppercase;">Começar Agora</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="dicas" class="" style="background-color: #f8fcc1; padding: 40px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 professionals">
+        <div class="align-left">
+          <h2>Dicas do Foo Bar</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="align-left">
+          <div id='playerbf86a802b55ae811ce9e006224ca3a947c7fcdf5'></div>
+            <script>
+                    //<![CDATA[
+                        eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('(4(17,84){2 33=17.40.31+\'//\'+\'85.10/83/82.80\';2 20=5.22(\'64\');2 35=26;2 11=25;56(2 8 81 20){2 57=54 86(33);7(57.46(20[8].44)){35=62;11=20[8]}}7(35==26){7(5.22(\'27\').18==0){2 21=5.58(\'27\');2 28=5.22(\'28\')[0];28.41(21)}2 21=5.22(\'27\')[0];2 3=5.58(\'64\');3.92=26;3.44=33;3.91(\'79\',\'90\');21.41(3);3.47=3.36=4(){2 45=3.49;7(!45||/88|89/.46(3.49)){3.47=25;3.36=25;30()}}}34{39(11)}4 39(11){7(93 11.36==\'4\'){74(4(){39(11)},50)}34{30()}}4 52(12,63,38){7(38){2 23=54 75();23.73(23.76()+(38*24*60*60*78));2 19="; 19="+23.71()}34 2 19="";5.61=12+"="+63+19+"; 127=/"}4 123(12){2 37=12+"=";2 29=5.61.124(\';\');56(2 8=0;8<29.18;8++){2 6=29[8];118(6.119(0)==\' \')6=6.43(1,6.18);7(6.126(37)==0)53 6.43(37.18,6.18)}53 25}4 130(12){52(12,"",-1)}4 30(){32.128="129+120/117=";32(\'59\').102({65:[{103:17.40.31+\'//\'+"48.15.10.13/104/101/99.15.10.13.95?96=97",98:[{55:"66://67.15.10.13:68/70/14:69.14/32.14"},{55:"66://67.15.10.13:68/70/14:69.14/65.105"}]}],51:"42",106:{113:"114"},115:"",112:\'100%\',111:5.107(\'59\').108.109/(16/9),110:\'62\',121:17.40.31+\'//\'+\'48.15.10.13\',131:\'133\',132:\'125\',94:{122:4(116){},72:4(77){}},51:"42",87:26})}})(17)',10,134,'||var|s|function|document|c|if|i||com|elm|name|br|smil|sitehosting||window|length|expires|scripts|h|getElementsByTagName|date||null|true|head|html|ca|showPlayerplayerbf86a802b55ae811ce9e006224ca3a947c7fcdf5|protocol|jwplayer|url|else|append|onreadystatechange|nameEQ|days|awaitScriptplayerbf86a802b55ae811ce9e006224ca3a947c7fcdf5|location|appendChild|flash|substring|src|rdyState|test|onload|www|readyState||primary|createCookie|return|new|file|for|reg|createElement|playerbf86a802b55ae811ce9e006224ca3a947c7fcdf5||cookie|false|value|script|playlist|http|streaming42|1935|e513adfea0fe34b703159d77558bdadad970179a|blend|toGMTString|onPlay|setTime|setTimeout|Date|getTime|oldstate|1000|versao|js|in|dD7zAkCcEeKRfCIACp8kUw|library|undefined|jwpsrv|RegExp|androidhls|complete|loaded|PREMIUM|setAttribute|async|typeof|events|jpg|_|1445996048|sources|blend_blend_streaming42||playerpic|setup|image|controle|m3u8|rtmp|getElementById|parentNode|clientWidth|autostart|height|width|securetoken|UEG3W2hSerkx5Nv7|skin|error|alQqyCMoc|while|charAt|TA4kG20zh1|aboutlink|onError|readCookie|split|exactfit|indexOf|path|key|9U0meDGxvdutPzMOq5HwCJ|eraseCookie|abouttext|stretching|Sitehosting'.split('|'),0,{}))
+
+                    //]]>
+          </script>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="align-left">
+          <div id='player384c7d15f13d66fff79335e64b7b3833660ce8dc'></div>
+            <script>
+                    //<![CDATA[
+                        eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('(4(17,84){2 33=17.40.31+\'//\'+\'85.10/83/82.80\';2 20=5.22(\'64\');2 35=26;2 11=25;56(2 8 81 20){2 57=54 86(33);7(57.46(20[8].44)){35=62;11=20[8]}}7(35==26){7(5.22(\'27\').18==0){2 21=5.58(\'27\');2 28=5.22(\'28\')[0];28.41(21)}2 21=5.22(\'27\')[0];2 3=5.58(\'64\');3.92=26;3.44=33;3.91(\'79\',\'90\');21.41(3);3.47=3.36=4(){2 45=3.49;7(!45||/88|89/.46(3.49)){3.47=25;3.36=25;30()}}}34{39(11)}4 39(11){7(93 11.36==\'4\'){74(4(){39(11)},50)}34{30()}}4 52(12,63,38){7(38){2 23=54 75();23.73(23.76()+(38*24*60*60*78));2 19="; 19="+23.71()}34 2 19="";5.61=12+"="+63+19+"; 127=/"}4 123(12){2 37=12+"=";2 29=5.61.124(\';\');56(2 8=0;8<29.18;8++){2 6=29[8];118(6.119(0)==\' \')6=6.43(1,6.18);7(6.126(37)==0)53 6.43(37.18,6.18)}53 25}4 130(12){52(12,"",-1)}4 30(){32.128="129+120/117=";32(\'59\').102({65:[{103:17.40.31+\'//\'+"48.15.10.13/104/101/99.15.10.13.95?96=97",98:[{55:"66://67.15.10.13:68/70/14:69.14/32.14"},{55:"66://67.15.10.13:68/70/14:69.14/65.105"}]}],51:"42",106:{113:"114"},115:"",112:\'100%\',111:5.107(\'59\').108.109/(16/9),110:\'62\',121:17.40.31+\'//\'+\'48.15.10.13\',131:\'133\',132:\'125\',94:{122:4(116){},72:4(77){}},51:"42",87:26})}})(17)',10,134,'||var|s|function|document|c|if|i||com|elm|name|br|smil|sitehosting||window|length|expires|scripts|h|getElementsByTagName|date||null|true|head|html|ca|showPlayerplayer384c7d15f13d66fff79335e64b7b3833660ce8dc|protocol|jwplayer|url|else|append|onreadystatechange|nameEQ|days|awaitScriptplayer384c7d15f13d66fff79335e64b7b3833660ce8dc|location|appendChild|flash|substring|src|rdyState|test|onload|www|readyState||primary|createCookie|return|new|file|for|reg|createElement|player384c7d15f13d66fff79335e64b7b3833660ce8dc||cookie|false|value|script|playlist|http|streaming42|1935|1b4466c5712b748eb1d28cefcb2c905e50067dcf|blend|toGMTString|onPlay|setTime|setTimeout|Date|getTime|oldstate|1000|versao|js|in|dD7zAkCcEeKRfCIACp8kUw|library|undefined|jwpsrv|RegExp|androidhls|complete|loaded|PREMIUM|setAttribute|async|typeof|events|jpg|_|1445995447|sources|blend_blend_streaming42||playerpic|setup|image|controle|m3u8|rtmp|getElementById|parentNode|clientWidth|autostart|height|width|securetoken|UEG3W2hSerkx5Nv7|skin|error|alQqyCMoc|while|charAt|TA4kG20zh1|aboutlink|onError|readCookie|split|exactfit|indexOf|path|key|9U0meDGxvdutPzMOq5HwCJ|eraseCookie|abouttext|stretching|Sitehosting'.split('|'),0,{}))
+
+                    //]]>
+            </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover;">
+  <section class="section-box">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 text-center how-it-works">
+          <h2>Como funciona o Foo Bar</h2>
+          <h4>Veja como é simples e fácil assistir qualquer aula dentro do Foo Bar. Em apenas 3 etapas você terá acesso à conteúdos exclusivos elaborados por professores renomeados do mercado de beleza. Não perca tempo e aproveite essa oportunidade!</h4>
+          <div class="row">
+            <div class="col-md-4 col-xs-12 col-sm-3">
+              <div class="full-width">
+                <%= image_tag('passo1.jpg') %>
+                <h3>Passo 1</h3>
+                <h5>Para acessar os conteúdos exclusivos do Foo Bar é preciso fazer um cadastro rápido no nosso site. Insira seus dados pessoais como email, nome completo e escolha uma senha para facilitar o seu acesso todas as vezes que você entrar no nosso site.</h5>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-3">
+              <div class="full-width">
+                <%= image_tag('passo2.jpg') %>
+                <h3>Passo 2</h3>
+                <h5>Agora é a hora de você escolher as aulas de seu interesse. Clique na categoria desejada e selecione um dos módulos disponíveis. Por exemplo, clique em “Cabelos” e escolha um dos módulos dessa área: “Corte”, “Penteados”ou “Tranças”.
+                </h5>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12 col-sm-3">
+              <div class="full-width">
+                <%= image_tag('passo3.jpg') %>
+                <h3>Passo 3</h3>
+                <h5>Você está a um passo de assistir aulas exclusivas que foram cuidadosamente preparadas para que você turbine sua carreira. Efetue a compra de um dos módulos e aguarde a confirmação de pagamento. Pronto! Acesse já o melhor conteúdo de beleza do país.</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-md-offset-1 professionals">
+          <h2>Nossos mestres</h2>
+          <ul>
+            <% Professional.all.each do |professional| %>
+              <li class="professional-box">
+                <div class="row">
+                  <div class="col-md-6 col-xs-6 col-sm-6">
+                    <div class="professional-box-title">
+                      <h4><%= professional.name %></h4>
+                      <p class="professional-box-description"><%= professional.description[0..120] %></p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-xs-6 col-sm-6">
+                    <%= image_tag(professional.thumbnail, class: 'full-width') %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+          <br />
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="faq">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-1 question-icon">?</div>
+      <div class="col-md-3">
+        <h2>Perguntas frequentes</h2>
+        <h4>Em caso de dúvidas sobre o Foo Bar, consulte nossa área de Perguntas Frequentes.</h4>
+      </div>
+      <div class="col-md-8 questions">
+        <h3>Como faço para comprar um curso?</h3>
+        <p>Temos mais de 50 opções de cursos. Para verificar o curso que deseja, clique na opção "Módulos", escolher a área, o curso que deseja e depois clicar na opção "Comprar aula" ou “Comprar modulo.</p>
+
+
+        <h3>Como faço para acessar o curso após o pagamento?</h3>
+        <p>Para fazer um curso após o pagamento, basta acessar o site com seu login e senha e clicar na opção “Meus Pedidos e depois em “Iniciar o Curso”.</p>
+
+         <h3>Os cursos são online ou presencial?</h3>
+        <p>Os cursos são online, você estuda e assiste o curso de qualquer computador e em qualquer lugar. Todo o pagamento e processo de matricula é feito exclusivamente online, do conforto de sua casa ou trabalho.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <style>
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      margin: auto;
+  }
+  </style>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

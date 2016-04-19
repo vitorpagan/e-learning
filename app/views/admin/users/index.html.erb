@@ -1,0 +1,42 @@
+<h1>Usuários</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome Completo</th>
+      <th>E-mail</th>
+      <th>Data de Criação</th>
+      <th>Ativo</th>
+      <th>Admin</th>
+      <th class="text-center">Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= l(user.created_at, format: :full) %></td>
+        <td><%= user.status? ? 'Sim' : 'Não' %></td>
+        <td><%= user.admin? ? 'Sim' : 'Não' %></td>
+        <td class="text-center">
+          <%= link_to admin_user_path(user) do %>
+            <span class="glyphicon glyphicon-search btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to edit_admin_user_path(user) do %>
+            <span class="glyphicon glyphicon-pencil btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to admin_user_path(user), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-sm"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= link_to new_admin_user_path, class: 'btn btn-primary' do %>
+    Novo Usuário | <span class="glyphicon glyphicon-plus"></span>
+  <% end %>
+</div>

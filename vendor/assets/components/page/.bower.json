@@ -1,0 +1,33 @@
+{
+  "name": "page",
+  "main": [
+    "./page.js",
+    "./page.min.js"
+  ],
+  "version": "0.3.0",
+  "homepage": "https://github.com/lucasmazza/page.js",
+  "authors": [
+    "Lucas Mazza <lucastmazza@gmail.com>"
+  ],
+  "description": "Running your javascript code, one page at a time.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "example",
+    "script",
+    "spec",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.0",
+    "commit": "71dd6b9c6a598e7c31affce721c4043ed6456e44"
+  },
+  "_source": "git://github.com/lucasmazza/page.js.git",
+  "_target": "~0.3.0",
+  "_originalSource": "lucasmazza/page.js"
+}

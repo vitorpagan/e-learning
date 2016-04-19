@@ -1,0 +1,149 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to home_url, class: 'brand' do %>
+        <%= image_tag('logoead.png') %>
+      <% end %>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="nav navbar-nav">
+        <li>
+          <%= link_to 'Sobre Nós', about_us_path %>
+        </li>
+        <li>
+          <%= link_to 'Módulos', courses_path %>
+        </li>
+       <li>
+          <%= link_to 'Aulas', all_classes_path %>
+        </li>
+        <li>
+          <%= link_to 'Nosso Embaixador', about_persil_path %>
+        </li>
+        <li>
+          <%= link_to 'FAQ', faq_path %>
+        </li>
+        <li>
+          <%= link_to 'Contato', contact_path %>
+        </li>
+        <% if current_user %>
+          <li>
+            <%= link_to 'Minhas Aulas', my_video_classes_path %>
+          </li>
+        <% end %>
+        <% if current_user && current_user.admin? %>
+          <li>
+            <%= link_to 'Admin', admin_path %>
+          </li>
+          <!-- <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Usuários', admin_users_path %></li>
+              <li><%= link_to 'Categorias', admin_categories_path %></li>
+              <li><%= link_to 'Módulos', admin_courses_path %></li>
+              <li><%= link_to 'Aulas', admin_video_classes_path %></li>
+              <li><%= link_to 'Profissionais', admin_professionals_path %></li>
+              <li><%= link_to 'Público Alvo', admin_public_targets_path %></li>
+              <li><%= link_to 'Pré-Requisitos', admin_prerequisites_path %></li>
+              <li><%= link_to 'Pedidos', admin_orders_path %></li>
+              <li><%= link_to 'Logs', admin_logs_path %></li>
+            </ul>
+          </li> -->
+        <% end %>
+      </ul>
+      <% if user_signed_in? %>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="text-right">
+            <%= link_to shopping_cart_path, class: 'no-padding-link' do %>
+              <div class="shopping-cart relative" data-shopping-cart>
+                <i class="glyphicon glyphicon-shopping-cart"></i>
+                <span class="items-count" data-items-count><%= current_user.shopping_cart.shopping_cart_items.size %></span>
+              </div>
+            <% end %>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= current_user.name %> <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to 'Perfil', profile_path %></li>
+              <li><%= link_to 'Meus Pedidos', orders_path %></li>
+              <li><%= link_to 'Sair', destroy_user_session_path, method: :delete %></li>
+            </ul>
+          </li>
+        </ul>
+      <% else %>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <%= link_to 'Cadastrar', new_user_registration_path, class: 'sign-up' %>
+          </li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" href="#" data-toggle="dropdown">Entrar <strong class="caret"></strong></a>
+            <div class="dropdown-menu dropdown-menu-right" style="padding: 30px; width: 300px;">
+              <%= form_for(:user, :url => session_path(:user)) do |f| %>
+                <div class="form-group">
+                  <%= f.text_field :email, placeholder: 'E-mail', class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.password_field :password, placeholder: 'Senha',  class: 'form-control' %>
+                </div>
+                <div class="form-group">
+                  <%= f.check_box :remember_me %>
+                  <%= f.label :remember_me %>
+                </div>
+                <div class="actions">
+                  <%= f.submit 'Entrar', class: 'btn btn-primary' %>
+                </div>
+                <%= link_to "Esqueceu sua senha?", new_password_path(:user) %>
+                <hr />
+                <p class="text-center">
+                  <%= link_to 'Entrar com Facebook', user_omniauth_authorize_path(:facebook), id: "sign_in_facebook", title: 'Facebook', class: 'btn btn-primary' %>
+                </p>
+              <% end %>
+            </div>
+          </li>
+        </ul>
+      <% end %>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div data-shopping-cart-container id="shopping_cart_container" class="box"></div>
+<div id="shopping-cart-message" class="alert alert-success" data-alert-hide="true" data-shopping-cart-message>
+  <a class="close" data-dismiss="alert">×</a>
+  <div data-shopping-cart-message-content></div>
+</div>
+
+<script id="shopping-cart-template-header" type="text/x-handlebars-tmpl">
+  <i class="glyphicon glyphicon-shopping-cart"></i>
+  <span class="items-count" data-items-count>{{items-count}}</span>
+</script>
+
+<script id="shopping-cart-template" type="text/x-handlebars-tmpl">
+  <h3>Carrinho de Compras</h3>
+  <table class="table">
+    {{#each items}}
+      <tr>
+        {{#if course}}
+          <td>{{course.name}} (Módulo)</td>
+          <td>R{{format-currency course.price}}</td>
+          <td><button data-remove-course data-course-id="{{course.id}}" class="btn btn-xs btn-danger">X</button></td>
+        {{else}}
+          <td>{{video_class.title}} (Aula)</td>
+          <td>R{{format-currency video_class.price}}</td>
+          <td><button data-remove-video-class data-video-class-id="{{video_class.id}}" class="btn btn-xs btn-danger">X</button></td>
+        {{/if}}
+      </tr>
+    {{/each}}
+    <!--tr>
+      <td><strong>Total:</strong></td>
+      <td>{{ total }}</td>
+    </tr-->
+  </table>
+  <p class="text-center"><a href="<%= shopping_cart_path %>" class="btn btn-success">CONFIRMAR</a></p>
+</script>

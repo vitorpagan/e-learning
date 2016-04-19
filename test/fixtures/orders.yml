@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shopping_cart_id: 
+  status: 1
+  payment_method_id: 1
+
+two:
+  shopping_cart_id: 
+  status: 1
+  payment_method_id: 1

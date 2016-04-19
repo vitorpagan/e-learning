@@ -1,0 +1,19 @@
+<%= simple_form_for([:admin, @public_target]) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="form-group">
+        <%= f.input :name, input_html: { class: 'form-control' } %>
+      </div>
+      <% if @public_target.new_record? %>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_public_targets_path, class: 'btn btn-default' %> <%= f.submit 'Cadastrar', class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_public_targets_path, class: 'btn btn-default' %> <%= f.submit 'Atualizar', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,47 @@
+<h1>Lista de Módulos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Categoria</th>
+      <th>Nível</th>
+      <th>Aulas</th>
+      <th>Preço</th>
+      <th>Ativo</th>
+      <th>Data de Criação</th>
+      <th class="text-center">Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @courses.each do |course| %>
+      <tr>
+        <td><%= course.name %></td>
+        <td><%= course.category.name %></td>
+        <td><%= course.level.name %></td>
+        <td><%= course.video_classes.count %></td>
+        <td><%= number_to_currency(course.price, precision: 2) %></td>
+        <td><%= course.active ? 'Sim' : 'Não' %></td>
+        <td><%= l(course.created_at, format: :short) %></td>
+        <td class="text-center">
+          <%= link_to admin_course_path(course) do %>
+            <span class="glyphicon glyphicon-search btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to edit_admin_course_path(course) do %>
+            <span class="glyphicon glyphicon-pencil btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to admin_course_path(course), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-sm"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= link_to new_admin_course_path, class: 'btn btn-primary' do %>
+    Novo Módulo | <span class="glyphicon glyphicon-plus"></span>
+  <% end %>
+</div>

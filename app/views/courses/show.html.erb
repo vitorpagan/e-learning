@@ -1,0 +1,118 @@
+<div class="container <%= @course.category.parent.nil? ? @course.category.identifier : @course.category.parent.identifier %>">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="course-box margin top">
+        <div class="box" data-course-box>
+          <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-8 header">
+              <h4><%= @course.category.parent.name if @course.category.parent %></h4>
+              <h3><%= @course.category.name %></h3>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              <img class="pull-right" src="<%= image_url('icone_penteado.png')%>" style="width: 44px;"/>
+<!--               <span class="category-icon glyphicon glyphicon-fire pull-right"></span> -->
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-md-6">
+              <div class="full-width">
+                <%= link_to course_path(@course), title: @course.name do %>
+                  <%= image_tag(@course.thumbnail) %>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h2><%= link_to @course.name, course_path(@course), title: @course.name %></h2>
+              <p><%= @course.description %></p>
+              <p><strong>Nível:</strong> <%= @course.level.name %></p>
+              <p><strong>Quantidade de Aulas:</strong> <%= @course.video_classes.size %></p>
+              <div class="text-center">
+                <p>
+                  <strong><span class="s20"><%= number_to_currency(@course.price) %></span></strong><br />
+                  Custo do módulo
+                  <p><button class="btn btn-primary btn-lg">COMPRAR MÓDULO</button></p>
+                </p>
+              </div>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-12">
+              <div class="full-width">
+                <%= link_to course_path(@course), title: @course.name do %>
+                  <%= image_tag(@course.thumbnail) %>
+                <% end %>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <h2><%= link_to @course.name, course_path(@course), title: @course.name %></h2>
+              <p><%= @course.description %></p>
+              <p><strong>Nível:</strong> <%= @course.level.name %></p>
+              <% if @allowed %>
+              <% else %>
+                <div class="buy-course row">
+                  <div class="col-md-5 col-sm-5 col-xs-12 text-center">
+                    Custo do módulo<br />
+                    <strong><span class="s20">12x de <%= number_to_currency(@course.price / 12) %></span></strong>
+                    <strong><span class="s16">TOTAL:<%= number_to_currency(@course.price) %></span></strong>
+                  </div>
+                  <div class="col-md-7 col-sm-7 col-xs-12">
+                    <%= link_to 'COMPRAR O MÓDULO', shopping_cart_item_adicionar_path(@course, type: 'course'), class: 'btn btn-primary btn-lg' %>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-xs-12"><small><strong>Importante:</strong> Ao comprar um módulo você ganhará o certificado para impressão.</small></div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 video-classes">
+      <div class="margin top bottom videos-list">
+        <div class="box-title">
+          <div class="row">
+            <div class="col-md-12">
+              <% if @course.video_classes.size == 1  %>
+              <h3><%= @course.video_classes.size %> Aula inclusa na compra do módulo</h3>
+              <% else %>
+              <h3><%= @course.video_classes.size %> Aulas inclusas na compra do módulo</h3>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <ul>
+        <% @course.video_classes.each do |video_class| %>
+          <li class="row no-padding no-margin left right">
+            <%= link_to course_video_class_path(@course, video_class) do %>
+              <div class="col-md-6 col-sm-6 col-xs-6 full-width">
+               <%= image_tag(video_class.thumbnail) %>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6 video-description no-padding left">
+                <h4><%= video_class.title %></h4>
+                <p class="description" title="<%= video_class.description %>"><%= video_class.description[0..200] %> ...</p>
+                <div class="col-md-8 col-sm-8 col-xs-8 video-description no-padding left">
+                <span class="text-left">Aula Avulsa por R$ <%= video_class.price %></span>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4 video-description no-padding left">
+                <span class="text-left"><%= duration(video_class.duration) %></span>
+                </div>
+
+                <!--<p class="text-right"><%= duration(video_class.duration) %></p>-->
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+        </ul>
+        <div class="box-title">
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Duração total</h5>
+            </div>
+            <div class="col-md-6 text-right">
+              <h4><%= duration(@course.duration) %></h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

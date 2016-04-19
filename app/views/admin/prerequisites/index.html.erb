@@ -1,0 +1,37 @@
+<h1>Pré-Requisitos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Data de Criação</th>
+      <th class="text-center" width="20%">Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @prerequisites.each do |prerequisite| %>
+      <tr>
+        <td><%= prerequisite.name %></td>
+        <td><%= l(prerequisite.created_at, format: :short) %></td>
+        <td class="text-center">
+          <%= link_to admin_prerequisite_path(prerequisite) do %>
+            <span class="glyphicon glyphicon-search btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to edit_admin_prerequisite_path(prerequisite) do %>
+            <span class="glyphicon glyphicon-pencil btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to admin_prerequisite_path(prerequisite), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-sm"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= link_to new_admin_prerequisite_path, class: 'btn btn-primary' do %>
+    Novo Pré-Requisito | <span class="glyphicon glyphicon-plus"></span>
+  <% end %>
+</div>

@@ -1,0 +1,5 @@
+translations:
+  - file: "vendor/assets/javascripts/i18n/translations.js"
+    only: ["*.chosen", "*.frontend", "*.number", "*.autocomplete"]
+  - file: 'public/javascripts/pt-BR.js'
+    only: ["*.date", "*.time", "*.number"]

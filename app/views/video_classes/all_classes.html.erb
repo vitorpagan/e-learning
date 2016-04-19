@@ -1,0 +1,57 @@
+<div class="container-fluid category-1" style="background-image: url('https://www.educacaobeleza.com.br/assets/bg_section-d905f0476196512f9d9b485e10013585.jpg'); background-size: cover;">
+  <div class="row relative">
+    <div class="col-md-12 content">
+      <div data-courses-container class="courses-container">
+        <div class="filter-container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-8">
+                <p><h1>Aulas do Foo Bar</h1></p>
+              </div>
+              <div class="col-md-4">
+                <div class="call-to-action-btn">
+                  <a href="/lista-aulas" class="btn btn-list-course btn-primary btn-lg" style="text-transform: uppercase;">CONFIRA AS AULAS DISPONÍVEIS</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <hr></hr>
+        </div>
+        <div class="row">
+          <% @video_classes.each do |video_class| %>
+            <div class="col-md-4 course-box">
+              <div class="box" data-course-box style="height: 810px;">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12 header">
+                    <h2 style="color: #cc0c39;"><%= video_class.title %></h2>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="thumbnail">
+                        <%= image_tag(video_class.thumbnail) %>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="height: 220px;text-align: justify;">
+                      <p><%= video_class.description %></p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <p><strong>Duração:</strong> <%= duration(video_class.duration) %></p>
+                      <p style="font-size: 16px;color: #cc0c39"><strong>Preço:</strong> <%= number_to_currency(video_class.price) %></p>
+                    </div>
+                    <div class="col-md-12">
+                      <p><%= link_to 'VER DETALHES', course_video_class_path(video_class.courses.first, video_class), class: 'btn btn-list-course btn-primary btn-lg' %>
+                      </p>
+                      <p><%= link_to 'COMPRAR AULA', shopping_cart_item_adicionar_path(video_class, type: 'video_class'), class: 'btn btn-list-course btn-primary btn-lg' %></p>
+                      </p>
+                    </div>
+                  </div>
+                </div><!-- row -->
+              </div><!-- box -->
+            </div>
+          <% end %>
+        </div><!-- row -->
+      </div>
+    </div>
+  </div>
+</div>
+

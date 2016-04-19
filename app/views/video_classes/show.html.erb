@@ -1,0 +1,165 @@
+<div class="<%= @course.category.parent.nil? ? @course.category.identifier : @course.category.parent.identifier %>">
+  <div data-video-container>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 margin top bottom">
+          <div class="box" data-course-box>
+            <div class="row">
+              </div>
+            <h2><%= @video_class.title %></h2>
+            <p><b>Profissional:</b> <%= @video_class.professional.name %></p>
+            <p><b>Duração:</b> <%= duration(@video_class.duration) %></p>
+            <p><%= @video_class.description %></p>
+            <div class="row margin top buy">
+              <div class="col-md-12 text-center no-padding left right">
+                  <% if @video_class.free? %>
+                    <strong><span class="s30">Esta aula é grátis</span></strong><br />
+                  <% else %>
+                    <strong><span class="s30"><%= number_to_currency(@video_class.price) %></span></strong><br />
+                  <% end %>
+              </div>
+<!--          <div class="col-md-6 text-center no-padding left right">
+                <p>
+                  <strong><span class="s20"><%= number_to_currency(@course.price) %></span></strong><br />
+                  <p><%= link_to 'COMPRAR MÓDULO', shopping_cart_item_adicionar_path(@course, type: 'course'), class: 'btn btn-primary' %></p>
+                </p>
+              </div> -->
+              <div class="col-md-12">
+                <% if @allowed %>
+                  <% if @video_class.handout.present? %>
+                    <p class="text-center">
+                      <%= link_to 'Baixar Apostila', @video_class.handout.to_s, class: 'btn btn-default btn-lg', target: '_blank' %>
+                    </p>
+                  <% end %>
+                <% else %>
+                  <p class="text-center"><%= link_to 'COMPRAR AULA', shopping_cart_item_adicionar_path(@video_class, type: 'video_class'), class: 'btn btn-list-course btn-primary btn-lg' %></p>
+                  </p>
+                <% end %>
+              </div>
+              <!-- <div class="col-md-12">
+                <h4>Seu progresso no módulo (40%)</h4>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                    <span class="sr-only">40% Complete (success)</span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8 text-center margin bottom">
+          <% if @allowed %>
+<!--             <button data-previous-video class="video-control hidden-sm hidden-xs">< <span>vídeo anterior</span></button>
+            <button data-next-video class="video-control hidden-sm hidden-xs"><span>próximo vídeo</span> ></button>
+ -->          <!-- <div style="margin-left: 55px; margin-top: 13px;"> -->
+              <div>
+              <div class="embed-responsive embed-responsive-16by9">
+                <%= @video_class.embed.html_safe if @video_class.embed.present? %>
+              </div>
+            </div>
+          <% else %>
+            <div class="row margin top buy box">
+              <div class="col-md-12 text-center">
+                <img src="<%= image_url('img-player.jpg')%>" width="100%"/>
+                <h2>Você precisa adquirir a aula ou o módulo para poder assisti-la.</h2>
+              </div>
+              <div class="col-md-6 text-center no-padding left right">
+                <p>
+                  <%= link_to 'COMPRAR AULA', shopping_cart_item_adicionar_path(@video_class, type: 'video_class'), class: 'btn btn-list-course btn-primary btn-lg', style: 'width: 300px;margin-left: 14px;' %>
+                </p>
+              </div>
+              <div class="col-md-6 text-center no-padding left right">
+                <p>
+                  <%= link_to 'COMPRAR MÓDULO', shopping_cart_item_adicionar_path(@course, type: 'course'), class: 'btn btn-list-course btn-primary btn-lg', style: 'width: 300px;' %>
+                </p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="videos-list" data-videos-list>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="margin top bottom">
+            <div class="box-title">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3><%= @course.video_classes.size %> Aulas</h3>
+                </div>
+              </div>
+            </div>
+            <ul>
+            <% @course.video_classes.each do |video_class| %>
+              <li class="row <%= 'actual' if video_class.id == @video_class.id %> no-padding no-margin left right">
+                <%= link_to course_video_class_path(@course, video_class) do %>
+                  <div class="col-md-6 col-sm-6 col-xs-6 full-width">
+                   <%= image_tag(video_class.thumbnail) %>
+                  </div>
+                  <div class="col-md-6 col-sm-6 col-xs-6 video-description no-padding left">
+                    <h4><%= video_class.title %></h4>
+                    <p class="description" title="<%= video_class.description %>"><%= video_class.description[0..40] %> ...</p>
+                    <p class="text-right"><%= duration(video_class.duration) %></p>
+                  </div>
+                <% end %>
+              </li>
+            <% end %>
+            </ul>
+            <div class="box-title">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <h5>Duração total</h5>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                  <h4><%= duration(@course.duration) %></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="box margin top bottom">
+            <h1><%= @video_class.title %></h1>
+            <div class="row margin bottom">
+              <div class="col-md-9">Profissional: <%= @video_class.professional.name %></div>
+              <div class="col-md-3 text-right"><%= duration(@video_class.duration) %></div>
+            </div>
+            <div class="row margin bottom">
+              <div class="col-md-9"><%= @video_class.description %></div>
+<!--               <div class="col-md-3 text-right">
+                <%= link_to '#', class: 'social-btn' do %>
+                  <%= image_tag('32-facebook.png', size: '25') %>
+                <% end %>
+                <%= link_to '#', class: 'social-btn' do %>
+                  <%= image_tag('32-twitter.png', size: '25') %>
+                <% end %>
+                <%= link_to '#', class: 'social-btn' do %>
+                  <%= image_tag('32-googleplus.png', size: '25') %>
+                <% end %>
+              </div> -->
+            </div>
+          </div>
+          <div class="box margin top bottom">
+            <h2 class="underline">Detalhes da aula</h2>
+
+            <h4><%= VideoClass.human_attribute_name(:price) %></h4>
+            <p>
+              <%= number_to_currency(@video_class.price, precision: 2) %>
+            </p>
+            <h4>Pré-Requisitos</h4>
+            <p>
+              <%= @video_class.prerequisites.pluck(:name).join(', ') %>
+            </p>
+
+            <h4>Público Alvo</h4>
+            <p>
+              <%= @video_class.public_targets.pluck(:name).join(', ') %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

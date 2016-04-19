@@ -1,0 +1,32 @@
+<p>
+  <strong><%= VideoClass.human_attribute_name(:title) %>:</strong>
+  <%= @video_class.title %>
+</p>
+
+<p>
+  <strong><%= VideoClass.human_attribute_name(:description) %>:</strong>
+  <%= @video_class.description %>
+</p>
+
+<p>
+  <strong><%= VideoClass.human_attribute_name(:duration) %>:</strong>
+  <%= @video_class.duration %>
+</p>
+
+<p>
+  <strong><%= VideoClass.human_attribute_name(:price) %>:</strong>
+  <td><%= number_to_currency(@video_class.price, precision: 2) %></td>
+</p>
+
+<p>
+  <iframe width="560" height="315" src="<%= @video_class.url %>" frameborder="0" allowfullscreen></iframe>
+</p>
+
+<p>
+  <strong>Módulos:</strong>
+  <%= @video_class.courses.pluck(:name).join(',') %>
+</p>
+
+<div class="text-center">
+  <%= link_to 'Voltar', admin_video_classes_path, class: 'btn btn-default' %> <%= link_to 'Editar', edit_admin_video_class_path(@video_class), class: 'btn btn-primary' %>
+</div>

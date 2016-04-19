@@ -1,0 +1,62 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover;">
+  <section class="section-box" style="padding: 20px;padding-bottom: 0px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 how-it-works">
+          <h2 class="red pad-t-20"><%= @page_title %></h2>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="full-width">
+                <div class="default-container no-border-radius-top" style="min-height: 500px;">
+                  <% @video_classes.each do |user_video| %>
+                    <div class="row" style="margin-bottom: 30px;">
+                      <div class="col-md-7">
+                        <div class="embed-responsive embed-responsive-16by9">
+                          <%= user_video.video_class.embed.html_safe if user_video.video_class.embed.present? %>
+                        </div>
+                      </div>
+                      <div class="col-md-5">
+                        <h2><%= user_video.video_class.title %></h2>
+                        <p><b>Profissional:</b> <%= user_video.video_class.professional.name %></p>
+                        <p><b>Duração:</b> <%= duration(user_video.video_class.duration) %></p>
+                        <p><%= user_video.video_class.description %></p>
+                        <% if user_video.video_class.handout.present? %>
+                          <p class="text-center">
+                            <%= link_to 'Baixar Apostila', user_video.video_class.handout.to_s, class: 'btn btn-default btn-lg', target: '_blank' %>
+                          </p>
+                        <% end %>
+                      </div>
+                    </div>
+                  <% end %>
+                  <% @courses.each do |user_course| %>
+                    <% user_course.course.video_classes.each do |video_class| %>
+                      <div class="row" style="margin-bottom: 30px;">
+                        <div class="col-md-7">
+                          <div class="embed-responsive embed-responsive-16by9">
+                            <%= video_class.embed.html_safe if video_class.embed.present? %>
+                          </div>
+                        </div>
+                        <div class="col-md-5">
+                          <h2><%= video_class.title %></h2>
+                          <h4>Módulo: <%= link_to user_course.course.name, course_path(user_course.course) %></h4>
+                          <p><b>Profissional:</b> <%= video_class.professional.name %></p>
+                          <p><b>Duração:</b> <%= duration(video_class.duration) %></p>
+                          <p><%= video_class.description %></p>
+                          <% if video_class.handout.present? %>
+                            <p class="text-center">
+                              <%= link_to 'Baixar Apostila', video_class.handout.to_s, class: 'btn btn-default btn-lg', target: '_blank' %>
+                            </p>
+                          <% end %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

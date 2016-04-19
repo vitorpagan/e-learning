@@ -1,0 +1,60 @@
+<h1>Categorias</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Data de Criação</th>
+      <th>Módulos</th>
+      <th>Aulas</th>
+      <th class="text-center" width="20%">Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td><%= l(category.created_at, format: :short) %></td>
+        <td><%= category.courses.size %></td>
+        <td><%= category.video_classes_count %></td>
+        <td class="text-center">
+          <%= link_to admin_category_path(category) do %>
+            <span class="glyphicon glyphicon-search btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to edit_admin_category_path(category) do %>
+            <span class="glyphicon glyphicon-pencil btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to admin_category_path(category), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-sm"></span>
+          <% end %>
+        </td>
+      </tr>
+      <% category.categories.each do |subcategory| %>
+        <tr class="subcategory">
+          <td><%= subcategory.name %></td>
+          <td><%= l(subcategory.created_at, format: :short) %></td>
+          <td><%= subcategory.courses.size %></td>
+          <td><%= subcategory.video_classes_count %></td>
+          <td class="text-center">
+            <%= link_to admin_category_path(subcategory) do %>
+              <span class="glyphicon glyphicon-search btn btn-default btn-sm"></span>
+            <% end %>
+            <%= link_to edit_admin_category_path(subcategory) do %>
+              <span class="glyphicon glyphicon-pencil btn btn-default btn-sm"></span>
+            <% end %>
+            <%= link_to admin_category_path(subcategory), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+              <span class="glyphicon glyphicon-remove btn btn-danger btn-sm"></span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= link_to new_admin_category_path, class: 'btn btn-primary' do %>
+    Nova Categoria | <span class="glyphicon glyphicon-plus"></span>
+  <% end %>
+</div>

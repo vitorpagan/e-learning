@@ -1,0 +1,97 @@
+<%= simple_form_for([:admin, @video_class]) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="form-group">
+        <%= f.input :title, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :description, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.input :duration, input_html: { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <%= f.input :price, input_html: { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <%= f.input :free, inline_label: 'Grátis' %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label><%= t('activerecord.attributes.video_class.handout') %>:</label>
+            <% if @video_class.handout.present? %>
+              <%= link_to 'Baixar', @video_class.handout.to_s, target: '_blank' %>
+            <% end %>
+            <%= f.file_field :handout, input_html: { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= image_tag(@video_class.thumbnail, size: '200') %>
+            <br /><%= f.file_field :thumbnail, input_html: { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= f.association :professional, input_html: { class: 'form-control chosen-select', data: { placeholder: 'Escolha o profissional'} } %>
+          </div>
+          <div class="form-group">
+            <div class="input select required video_class_public_targets">
+              <label class="select" for="video_class_public_target_id">Públicos Alvo</label>
+              <%= select_tag 'video_class[public_targets_ids][]', options_for_select(
+                PublicTarget.pluck(:name, :id),
+                @video_class.public_targets.pluck(:id)
+                ), multiple: :true, class: 'chosen-select col-md-12', data: { placeholder: 'Escolha o púlico alvo'} %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input select required video_class_prerequisites">
+              <label class="select" for="video_class_prerequisite_id">Pré-Requisitos</label>
+              <%= select_tag 'video_class[prerequisites_ids][]', options_for_select(
+                Prerequisite.pluck(:name, :id),
+                @video_class.prerequisites.pluck(:id)
+                ), multiple: :true, class: 'chosen-select col-md-12', data: { placeholder: 'Escolha os pré-requisitos'} %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input select required video_class_courses">
+              <label class="select" for="video_class_course_id">Módulos</label>
+              <%= select_tag 'video_class[courses_ids][]', options_for_select(
+                Course.pluck(:name, :id),
+                @video_class.courses.pluck(:id)
+                ), multiple: :true, class: 'chosen-select col-md-12', data: { placeholder: 'Escolha os Módulos'} %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.input :embed, label: 'Código do Player', input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :embed_ios, label: 'Código do Player (iOS)', input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :embed_android, label: 'Código do Player (Android)', input_html: { class: 'form-control' } %>
+      </div>
+      <% if @video_class.new_record? %>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_video_classes_path, class: 'btn btn-default' %> <%= f.submit 'Cadastrar', class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_video_classes_path, class: 'btn btn-default' %> <%= f.submit 'Atualizar', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

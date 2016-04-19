@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Olá <strong><%= @user.name %></strong>,</p>
+    <p>O pagamento do seu pedido, realizado em <%= l(@order.created_at, format: :full) %> através do site Foo Bar, foi <strong>REPROVADO</strong>.
+
+    <p>Verifique junto à sua operadora de cartão de crédito o motivo.</p>
+
+    <p>Qualquer dúvida, entre em contato conosco através do e-mail sac@educacaobeleza.com.br</p>
+
+    <h3>RESUMO DO PEDIDO</h3>
+    <% @order.shopping_cart.shopping_cart_items.each do |item| %>
+      <% if item.course_id %>
+        <strong>Módulo:</strong>
+        <%= link_to course_url(item.course), title: item.course.name do %>
+          <%= item.course.name %>
+        <% end %>
+        <br />
+      <% else %>
+        <strong>Aula:</strong>
+        <%= link_to item.video_class.title, course_video_class_url(item.video_class.courses.first, item.video_class)  %><br />
+      <% end %>
+    <% end %>
+    <h4>Valor Total: <%= number_to_currency(@order.shopping_cart.total) %></h4>
+  </body>
+</html>

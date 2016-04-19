@@ -1,0 +1,62 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover; min-height: 500px;">
+  <div class="container">
+    <div class="box margin top bottom">
+      <h2>Meus Pedidos</h2>
+      <% if current_user.orders.empty? %>
+        <div class="alert alert-info">Você ainda não fez nenhum pedido.</div>
+      <% else %>
+        <table class="table">
+          <tr>
+            <th>Número do Pedido</th>
+            <th>Código da Transação</th>
+            <th>Status</th>
+            <th>Valor</th>
+            <th>Forma de Pagamento</th>
+            <th>Data</th>
+            <th></th>
+          </tr>
+          <% current_user.orders.order(created_at: :desc).each do |order| %>
+            <tr>
+              <td> <%= order.id %></td>
+              <td> <%= order.id_transaction %></td>
+              <td> <%= t("activerecord.attributes.order.status.#{order.status}") %></td>
+              <td> <%= number_to_currency(order.shopping_cart.total) %></td>
+              <td> <%= t("activerecord.attributes.order.payment_method.#{order.payment_method_id}") %></td>
+              <td> <%= l(order.created_at, format: :full) %></td>
+              <td>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#order-<%= order.id %>" aria-expanded="false" aria-controls="collapseExample">Detalhes</button>
+                <% if order.BoletoBancario? %>
+                  <%= link_to 'Gerar Boleto', order.url, target: '_blank', class: 'btn btn-info' %>
+                <% end %>
+            </tr>
+            <tr class="collapse" id="order-<%= order.id %>">
+              <td></td>
+              <td colspan="6">
+                <% order.shopping_cart.shopping_cart_items.each do |item| %>
+                  <p>
+                    <% if item.course_id %>
+                      <strong>Módulo:</strong>
+                      <%= link_to course_path(item.course), title: item.course.name do %>
+                        <%= image_tag(item.course.thumbnail, size: '30') %> <%= item.course.name %>
+                      <% end %>
+
+                      <% if order.approved? %>
+                        <%= link_to 'Gerar Certificado', course_certificate_path(item.course), class: 'btn btn-info' %>
+                      <% end %>
+                    <% else %>
+                      <strong>Aula:</strong>
+                      <%= link_to item.video_class.title, course_video_class_path(item.video_class.courses.first, item.video_class)  %>
+                      <% if order.approved? && item.video_class.handout.present? %>
+                        <%= link_to 'Baixar Apostila', item.video_class.handout.to_s, class: 'btn btn-info', target: '_blank' %>
+                      <% end %>
+                    <% end %>
+                  </p>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

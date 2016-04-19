@@ -1,0 +1,17 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover; min-height: 500px;">
+  <div class="container">
+    <div class="box" style="margin-top: 150px;">
+      <h2>Seu pedido #<%= params[:order_id] %> foi criado com sucesso!</h2>
+      <% if params[:payment_code].present? %>
+        <h3>Código da transação: <strong><%= params[:payment_code] %></strong></h3>
+      <% end %>
+      <% if params[:payment_method_id] == 'CartaoCredito' %>
+        <h4>Assim que seu pagamento for aprovado, você terá acesso aos módulos e aulas compradas.</h4>
+        <%= link_to 'Voltar para a home', home_url, class: 'btn btn-primary' %>
+      <% else %>
+        <h4>Clique no link abaixo para realizar o pagamento.</h4>
+        <%= link_to 'Efetuar Pagamento', params[:url], class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

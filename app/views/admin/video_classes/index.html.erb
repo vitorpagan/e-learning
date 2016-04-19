@@ -1,0 +1,43 @@
+<h1>Listar Aulas</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th width="20%">Título</th>
+      <th width="35%">Descrição</th>
+      <th width="5%">Duração</th>
+      <th width="10%">Preço</th>
+      <th width="15%">Profissional</th>
+      <th width="15%" class="text-center">Ações</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @video_classes.each do |video_class| %>
+      <tr>
+        <td><%= video_class.title %></td>
+        <td><%= video_class.description %></td>
+        <td><%= video_class.duration %></td>
+        <td><%= number_to_currency(video_class.price, precision: 2) %></td>
+        <td><%= video_class.professional.name %></td>
+        <td class="text-center">
+          <%= link_to admin_video_class_path(video_class) do %>
+            <span class="glyphicon glyphicon-search btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to edit_admin_video_class_path(video_class) do %>
+            <span class="glyphicon glyphicon-pencil btn btn-default btn-sm"></span>
+          <% end %>
+          <%= link_to admin_video_class_path(video_class), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+            <span class="glyphicon glyphicon-remove btn btn-danger btn-sm"></span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="text-center">
+  <%= link_to new_admin_video_class_path, class: 'btn btn-primary' do %>
+    Nova Aula | <span class="glyphicon glyphicon-plus"></span>
+  <% end %>
+</div>

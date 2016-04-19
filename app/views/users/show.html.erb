@@ -1,0 +1,13 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover; min-height: 500px;">
+  <div class="container">
+    <div class="box margin top bottom">
+      <h2><%= current_user.name %></h2>
+      <p><strong>Data de cadastro: </strong> <%= l(current_user.created_at, format: :full) %></p>
+      <p><strong>E-mail: </strong> <%= current_user.email %></p>
+      <% if current_user.last_sign_in_at.present? %>
+        <p><strong>Último login: </strong> <%= l(current_user.last_sign_in_at, format: :full) %></p>
+      <% end %>
+      <p><strong>Telefone: </strong> <%= format_phone(current_user.phone) %></p>
+    </div>
+  </div>
+</div>

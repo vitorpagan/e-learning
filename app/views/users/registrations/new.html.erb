@@ -1,0 +1,105 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover; min-height: 500px;">
+  <div class="container">
+    <div class="margin top bottom">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <h1>Criar conta</h1>
+          No Foo Bar você pode criar sua conta utilizando seu email pessoal, ou criar através de seu login do Facebook. Escolha uma das opções abaixo e inicie seu cadastro!
+          <p class="text-center" style="padding-top: 20px;">
+            <%= link_to 'Realizar cadastro com Facebook', user_omniauth_authorize_path(:facebook), id: "sign_in_facebook", title: 'Facebook', class: 'btn btn-primary btn-lg' %>
+            <br />
+            <br />
+            OU
+            <br />
+
+          </p>
+          <%= simple_form_for(@user, url: :user_registration) do |f| %>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.input :email, input_html: { class: 'form-control' } %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.input :name, input_html: { class: 'form-control' } %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.input :password, input_html: { class: 'form-control' } %>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <%= f.input :password_confirmation, input_html: { class: 'form-control' } %>
+                </div>
+              </div>
+            </div>
+            <%= f.simple_fields_for :address do |p| %>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :zipcode, label: 'CEP', input_html: { class: 'form-control', data: { "search-address-path" => search_address_users_path, zipcode: true, helper: "#zipcode-helper" } } %>
+
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :address, label: 'Endereço', input_html: { class: 'form-control', data: {:"zipcode-callback" => "address"} } %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :number, label: 'Número', input_html: { class: 'form-control' } %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :city, label: 'Cidade', input_html: { class: 'form-control', data: {:"zipcode-callback" => "city"} } %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :state, label: 'Estado', input_html: { class: 'form-control', data: {:"zipcode-callback" => "state"} } %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :district, label: 'Bairro', input_html: { class: 'form-control', data: {:"zipcode-callback" => "district"} } %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= p.input :country, label: 'País', input_html: { class: 'form-control', data: {:"zipcode-callback" => "country"} } %>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <%= f.input :phone, label: 'Telefone (DDD+Telefone)', input_html: { class: 'form-control' } %>
+                  <span style="font-size: 11px;">Exemplo: (11) 3030-1234</span>
+                </div>
+              </div>
+            </div>
+            <% end %>
+            <div class="form-group text-center">
+              <%= f.submit 'Cadastrar', class: "btn btn-primary btn-lg" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+          <hr></hr>
+          Ao realizar seu cadastro, você concorda com os <%= link_to 'Termos de Uso', terms_use_path %> e <%= link_to 'Política de Privacidade', privacy_policy_path %> do Foo Bar.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

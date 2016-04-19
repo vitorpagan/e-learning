@@ -1,0 +1,237 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover; min-height: 500px;">
+  <div class="container">
+    <div class="shopping-cart-container margin top bottom">
+      <h1>Confirmar sua compra</h1>
+      <div class="row">
+      <% unless current_user.shopping_cart.shopping_cart_items.empty? %>
+        <div class="col-md-6">
+          <h2>Itens do Carrinho</h2>
+          <table class="table">
+            <% current_user.shopping_cart.shopping_cart_items.each do |item| %>
+              <tr>
+                <% if item.course %>
+                  <td><%= item.course.name %> (Módulo)</td>
+                  <td><%= number_to_currency(item.course.price) %></td>
+                <% else %>
+                  <td><%= item.video_class.title %> (Aula)</td>
+                  <td><%= number_to_currency(item.video_class.price) %></td>
+                <% end %>
+                <td>
+                  <%= link_to shopping_cart_item_path(item), method: :delete, data: { confirm: 'Você tem certeza?' } do %>
+                    <span class="btn btn-xs btn-danger">X</span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            <tr>
+              <td><strong>Total:</strong></td>
+              <td><strong><%= number_to_currency(current_user.shopping_cart.total) %></strong></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <ul class="nav nav-tabs" role="tablist" data-tabs-payment>
+            <li role="presentation" class="active"><a href="#cartao" aria-controls="CartaoCredito" role="tab" data-toggle="tab" aria-value="CartaoCredito">Cartão de Crédito</a></li>
+            <li role="presentation"><a href="#boleto" aria-controls="BoletoBancario" role="tab" data-toggle="tab" aria-value="BoletoBancario">Boleto Bancário</a></li>
+            <li role="presentation"><a href="#transferencia" aria-controls="DebitoBancario" role="tab" data-toggle="tab" aria-value="DebitoBancario">Transferêcia</a></li>
+          </ul>
+          <%= form_tag(checkout_shopping_cart_path, method: "post", id: 'confirm-checkout') do %>
+            <%= hidden_field_tag('order[id]', @order_id) %>
+            <%= hidden_field_tag('order[payment_code]', '') %>
+            <%= hidden_field_tag('order[id_transaction]', '') %>
+            <%= hidden_field_tag('order[payment_method_id]', 'CartaoCredito') %>
+            <%= hidden_field_tag('order[url]', '') %>
+            <%= hidden_field_tag('order[token]', '') %>
+          <% end %>
+            <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="cartao">
+              <%= render 'credit_card_fields' %>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="boleto"></div>
+            <div role="tabpanel" class="tab-pane" id="transferencia">
+              <div class="form-group">
+                <label class="control-label" for="user_bank">
+                  Instituição Financeira
+                </label>
+                <select name="order[bank]" class="form-control">
+                  <option value="BancoDoBrasil">Banco do Brasil</option>
+                  <option value="Bradesco">Bradesco</option>
+                  <option value="Banrisul">Banrisul</option>
+                  <option value="Itau">Itaú</option>
+                </select>
+              </div>
+            </div>
+            <p><small>*A transação será processadas pelo MOIP</small></p>
+          </div>
+          <div class="col-md-12 actions text-center">
+            <button class="btn btn-lg btn-primary" data-confirm-order>Confirmar</button>
+            <i data-spinning class="fa fa-circle-o-notch fa-spin fa-3x fa-fw hidden spinning"></i>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-md-12">
+          <div class="alert alert-info">Seu carrinho está vazio.</div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var funcaoSucesso = function(data){
+      $('input[name="order[payment_code]"]').val(data['CodigoMoIP']);
+      $('input[name="order[id_transaction]"]').val($('#MoipWidget').attr('data-id-transaction'));
+      $('input[name="order[url]"]').val(data['url']);
+      $('input[name="order[token]"]').val($('#MoipWidget').attr('data-token'));
+      $('#confirm-checkout').submit();
+    };
+
+    var funcaoFalha = function(data) {
+      alert(JSON.stringify(data));
+      toggleInputs(false);
+    };
+
+    function toggleInputs(disabled){
+      $('[data-credit-card-infos]').find('input, button, select').attr('disabled', disabled);
+      $('.shopping-cart-container').find('button').attr('disabled', disabled);
+      $('.shopping-cart-container table').find('a').attr('hidden', disabled);
+      $('[data-spinning]').toggleClass('hidden', !disabled);
+      $('[data-tabs-payment] li').attr('disabled', disabled);
+    }
+
+    function validateCreditCard(){
+      if($('[name="credit_card[name]"]').val() === '') {
+        alert("Informe o nome escrito no cartão.");
+        $('[name="credit_card[name]"]').focus();
+        return false;
+      }
+
+      if($('[name="credit_card[number]"]').val() === '') {
+        alert("Informe o número do cartão.");
+        $('[name="credit_card[number]"]').focus();
+        return false;
+      }
+
+      if($('[name="credit_card[expiration_month]"]').val() === '') {
+        alert("Informe o mês de validade do cartão.");
+        $('[name="credit_card[expiration_month]"]').focus();
+        return false;
+      }
+
+      if($('[name="credit_card[expiration_year]"]').val() === '') {
+        alert("Informe o ano de validade do cartão.");
+        $('[name="credit_card[expiration_year]"]').focus();
+        return false;
+      }
+
+      if($('[name="credit_card[cvv]"]').val() === '') {
+        alert("Informe o número de segurança encontrado atrás do cartão.");
+        $('[name="credit_card[cvv]"]').focus();
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+  <div id="MoipWidget"
+   data-token=""
+   data-id-transaction=""
+   callback-method-success="funcaoSucesso"
+   callback-method-error="funcaoFalha"></div>
+</div>
+<script type='text/javascript' src='https://www.moip.com.br/transparente/MoipWidget-v2.js' charset="ISO-8859-1"></script>
+
+<script>
+  $('[data-confirm-order]').on('click', function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var formaPagamento = $('[name="order[payment_method_id]"]').val();
+
+    if(formaPagamento === 'CartaoCredito'){
+      if(validateCreditCard()) {
+        toggleInputs(true);
+        $.ajax({
+          type: "get",
+          url: '/carrinho/instrucao_unica',
+          data: {},
+          success: function (data){
+            console.info('Token: ' + data.token);
+            $('#MoipWidget').attr('data-token', data.token);
+            $('#MoipWidget').attr('data-id-transaction', data.order_id);
+
+            var settings = {
+              "Forma": "CartaoCredito",
+              "Instituicao": $('[name="order[bandeira]"]').val(),
+              "Parcelas": $('[name="order[parcelas]"]').val(),
+              "CartaoCredito": {
+                  "Numero": $('[name="credit_card[number]"]').val(),
+                  "Expiracao": $('[name="credit_card[expiration_month]"]').val() + "/" + $('[name="credit_card[expiration_year]"]').val().substr(-2),
+                  "CodigoSeguranca": $('[name="credit_card[cvv]"]').val(),
+                  "Portador": {
+                      "Nome": $('[name="credit_card[name]"]').val(),
+                      "DataNascimento": "30/12/1987",
+                      "Telefone": "(11)3165-4020",
+                      "Identidade": "222.222.222-22"
+                  }
+              }
+            }
+            MoipWidget(settings);
+          }
+        });
+      }
+    } else if (formaPagamento === 'DebitoBancario') {
+      toggleInputs(true);
+      $.ajax({
+        type: "get",
+        url: '/carrinho/instrucao_unica',
+        data: {},
+        success: function (data){
+          console.info('Token: ' + data.token);
+          $('#MoipWidget').attr('data-token', data.token);
+          $('#MoipWidget').attr('data-id-transaction', data.order_id);
+
+          var settings = {
+            "Forma": "DebitoBancario",
+            "Instituicao": $('[name="order[bank]"]').val()
+          }
+          MoipWidget(settings);
+        }
+      });
+    } else {
+      toggleInputs(true);
+      $.ajax({
+        type: "get",
+        url: '/carrinho/instrucao_unica',
+        data: {},
+        success: function (data){
+          console.info('Token: ' + data.token);
+          $('#MoipWidget').attr('data-token', data.token);
+          $('#MoipWidget').attr('data-id-transaction', data.order_id);
+
+          var settings = {
+            "Forma": "BoletoBancario"
+          }
+          MoipWidget(settings);
+        }
+      });
+    }
+  });
+
+  $('[name="order[bandeira]"]').on('change', function(){
+    if($(this).val() === 'AmericanExpress'){
+      $('[name="credit_card[cvv]"]').attr('maxlength', 4).attr('size', 4);
+      $('[name="credit_card[number]').attr('maxlength', 15).attr('size', 15);
+      $('[name="credit_card[number]"]').val($('[name="credit_card[number]"]').val().substr(0,15));
+    } else {
+      $('[name="credit_card[cvv]"]').attr('maxlength', 3);
+      $('[name="credit_card[cvv]"]').attr('size', 3);
+      $('[name="credit_card[cvv]"]').val($('[name="credit_card[cvv]"]').val().substr(0,3));
+      $('[name="credit_card[number]').attr('maxlength', 16).attr('size', 16);
+    }
+  });
+
+  $('[data-tabs-payment] li').on('click', function(){
+    $('[name="order[payment_method_id]"]').val($(this).attr('aria-controls'));
+  });
+</script>

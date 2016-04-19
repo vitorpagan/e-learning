@@ -1,0 +1,34 @@
+<%= simple_form_for([:admin, @user]) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="form-group">
+        <%= f.input :name, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :email, input_html: { class: 'form-control' } %>
+      </div>
+      <% if @user.new_record? %>
+        <div class="form-group">
+          <%= f.input :password, input_html: { class: 'form-control' } %>
+        </div>
+        <div class="form-group">
+          <%= f.input :password_confirmation, input_html: { class: 'form-control' } %>
+        </div>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_users_path, class: 'btn btn-default' %> <%= f.submit 'Cadastrar', class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="form-group">
+          <%= f.input :status %>
+        </div>
+        <div class="form-group">
+          <%= f.input :admin %>
+        </div>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_users_path, class: 'btn btn-default' %> <%= f.submit 'Atualizar', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,12 @@
+.btn-contact {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #a3082c;
+    border-color: #ae0c32 #ae0c32 #7f2036;
+    width: 120px;
+    font-size: 16px;
+    &:hover {
+      background-color: #6e0921;
+      color: #fff;
+    }
+  }

@@ -1,0 +1,66 @@
+<%= simple_form_for([:admin, @course]) do |f| %>
+  <%= f.error_notification %>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="form-group">
+        <%= f.input :name, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <label class="string required" for="course_category"><abbr title="obrigatório">*</abbr> Categoria</label>
+        <select name="course[category_id]" class="form-control chosen-select" id="course_category">
+        <% if @course.category.nil? %>
+          <% @categories.each do |category| %>
+              <option value="<%= category.id%>"><%= category.name %></option>
+            <% category.categories.each do |subcategory| %>
+              <option value="<%= subcategory.id%>">  - <%= subcategory.name %></option>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% @categories.each do |category| %>
+              <option value="<%= category.id%>" <%= category.id == @course.category.id ? 'selected' : '' %>><%= category.name %></option>
+            <% category.categories.each do |subcategory| %>
+              <option value="<%= subcategory.id%>" <%= subcategory.id == @course.category.id ? 'selected' : '' %>>  - <%= subcategory.name %></option>
+            <% end %>
+          <% end %>
+        <% end %>
+        </select>
+      </div>
+      <div class="form-group">
+        <%= f.association :level, input_html: { class: 'form-control chosen-select', data: { placeholder: 'Selecione um nível'} } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :price, input_html: { class: 'form-control' } %>
+      </div>
+      <%= f.input :active, inline_label: 'Ativo' %>
+      <div class="form-group">
+        <%= f.input :order_number, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="form-group">
+        <%= f.input :description, input_html: { class: 'form-control' } %>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group"><label>Imagem:</label>
+            <%= image_tag(@course.thumbnail, size: '300') %>
+            <br /><%= f.file_field :thumbnail, input_html: { class: 'form-control' } %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group"><label>Certificado:</label>
+            <%= image_tag(@course.certificate, size: '300') %>
+            <br /><%= f.file_field :certificate, input_html: { class: 'form-control' } %>
+          </div>
+        </div>
+      </div>
+      <% if @course.new_record? %>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_courses_path, class: 'btn btn-default' %> <%= f.submit 'Cadastrar', class: "btn btn-primary" %>
+        </div>
+      <% else %>
+        <div class="form-group text-center">
+          <%= link_to 'Voltar', admin_courses_path, class: 'btn btn-default' %> <%= f.submit 'Atualizar', class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

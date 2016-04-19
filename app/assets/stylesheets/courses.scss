@@ -1,0 +1,164 @@
+// Place all the styles related to the Courses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#page-courses, #page-video_classes {
+
+  a.btn-list-course {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #a3082c;
+    border-color: #ae0c32 #ae0c32 #7f2036;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    &:hover {
+      background-color: #6e0921;
+      text-decoration: none;
+    }
+  }
+
+  .sidebar {
+    background: #1693a7;
+    color: #fff;
+    padding: 30px;
+    ul {
+      margin: 0 0 30px;
+      padding: 0;
+      li {
+        list-style-type: none;
+        label {
+          font-size: 14px;
+          font-weight: 500;
+        }
+        input {
+          margin-right: 5px;
+        }
+        &.subcategory {
+          margin-left: 20px;
+        }
+      }
+    }
+    [type="submit"] {
+      background: #0f6a79;
+      color: #fff;
+      border: 1px solid #0f6a79;
+      font-size: 16px;
+      padding: 10px 30px;
+      &:hover {
+        background: #117484;
+      }
+    }
+    &.affix {
+      top: 0;
+      left: 0;
+      & + .content {
+        margin-left: 25%;
+      }
+    }
+
+    .sidebar-filters-content {
+      overflow: auto;
+      margin-bottom: 15px;
+    }
+  }
+
+  .filter-container {
+    padding: 15px 0;
+    margin: 10px 0 0;
+  }
+
+  .courses-container {
+    margin-top: 15px;
+    .course-box {
+      min-height: 530px;
+    }
+  }
+
+
+  .course-box {
+    margin-bottom: 30px;
+    .header {
+      height: 54px;
+    }
+    h2 {
+      margin-top: 10px;
+      a {
+        text-decoration: none;
+      }
+    }
+    img {
+      width: 100%;
+    }
+
+    .alert {
+      margin-bottom: 0;
+    }
+
+    .buy-course {
+      background-color: #a3082c;
+      color: #fff;
+      padding: 30px;
+      margin: 30px -30px 0;
+      a.btn {
+        text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        background-color: #a3082c;
+        border-color: #ae0c32 #ae0c32 #7f2036;
+        color: #fff;
+        font-size: 18px;
+        padding: 10px 30px;
+        &:hover {
+          background-color: #6e0921;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .category-1 {
+    .course-box {
+      .buy-course {
+        background: #cc0c39;
+        button {
+          background: #a3082c;
+          border: 1px solid #7f2036;
+          &:hover {
+            background: #6e0921;
+          }
+        }
+      }
+    }
+  }
+
+  .video-classes {
+    .box-title {
+      padding: 15px;
+    }
+    .videos-list {
+      ul {
+        margin: 0;
+        padding: 0;
+
+        li {
+          list-style-type: none;
+          padding: 10px 0;
+          background: #fff;
+          color: #000;
+          img {
+            width: 100%;
+          }
+          a {
+            height: 100px;
+            display: block;
+          }
+          .description {
+            color: #333;
+          }
+        }
+      }
+    }
+    [data-video-container] {
+      /* background: #faf8c3; */
+      background: #555;
+    }
+  }
+}

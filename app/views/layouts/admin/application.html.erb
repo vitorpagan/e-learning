@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Foo Bar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag    'application', media: 'all'%>
+  <%= javascript_include_tag 'application' %>
+  <link href='//fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= body_class %>" id="<%= body_id %>" data-page="<%= controller_path %>#<%= action_name %>">
+  <%= render 'layouts/admin/navbar' %>
+  <div class="container padding top box">
+    <% flash.each do |kind, message| %>
+      <%= flash_message(kind) do %>
+        <a class="close" data-dismiss="alert">×</a>
+        <%= content_tag :div, message, id: "flash_#{kind}" %>
+      <% end %>
+    <% end %>
+    <%= yield %>
+  </div>
+</body>
+</html>

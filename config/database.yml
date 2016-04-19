@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  # database: educacao_beleza_development
+  host: ec2-54-83-10-210.compute-1.amazonaws.com
+  database: d800k9bi9rcmbd
+  username: tdjlhspyrksfpj
+  password: E3BnXc2hNFjy19R1qutofiN2Sg
+
+test:
+  <<: *default
+  database: educacao_beleza_test
+
+production:
+  <<: *default
+  database: educacao_beleza_production
+  username: educacao_beleza
+  password: educacao_beleza_2015

@@ -1,0 +1,47 @@
+Searching 1904 files for "persil" (case sensitive)
+
+/Users/vpagan/git/e-learning/app/controllers/pages_controller.rb:
+    3      @page_title = "Sobre o Educação Beleza"
+    4    end
+    5:   def about_persil
+    6      @page_title = "Nosso Embaixador Paulo Persil"
+    7    end
+
+/Users/vpagan/git/e-learning/app/views/layouts/_footer.html.erb:
+    9              <li><a href="#">Módulos</a></li>
+   10              <li><a href="#">Categorias</a></li>
+   11:             <li><%= link_to 'Nosso Embaixador', about_persil_path %></li>
+   12              <li><%= link_to 'Política de Privacidade', privacy_policy_path %></li>
+   13              <li><%= link_to 'Contato', contact_path %></li>
+
+/Users/vpagan/git/e-learning/app/views/layouts/_navbar.html.erb:
+   27          </li>
+   28          <li>
+   29:           <%= link_to 'Nosso Embaixador', about_persil_path %>
+   30          </li>
+   31          <li>
+
+/Users/vpagan/git/e-learning/app/views/pages/about_persil.html.erb:
+   19              <div class="row">
+   20                <div class="col-md-6 col-xs-6 col-sm-6">
+   21:                 <p><%= image_tag('img-paulo-persil.png') %></p>
+   22                </div>
+   23              </div>
+
+/Users/vpagan/git/e-learning/config/routes.rb:
+   45    get 'about_us', to: 'pages#about_us', path: 'sobre-o-educacao-beleza'
+   46  
+   47:   get 'about_persil', to: 'pages#about_persil', path: 'nosso-embaixador-paulo-persil'
+   48  
+   49    get 'my_video_classes', to: 'pages#my_video_classes', path: 'minhas-aulas'
+
+/Users/vpagan/git/e-learning/log/development.log:
+    <binary>
+
+/Users/vpagan/git/e-learning/tmp/cache/assets/development/sprockets/1854a839e3eca7b9357a1ac4e81b8010:
+    <binary>
+
+/Users/vpagan/git/e-learning/tmp/cache/assets/development/sprockets/720e9ca537065ed0ae06e6a95f8bc392:
+    <binary>
+
+13 matches across 8 files

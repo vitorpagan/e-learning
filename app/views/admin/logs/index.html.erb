@@ -1,0 +1,20 @@
+<h1>Logs</h1>
+<small>Últimos 50</small>
+<table class="table" style="table-layout:fixed;">
+  <thead>
+    <tr>
+      <th>Código da Transação</th>
+      <th>Status</th>
+      <th>Data</th>
+      <th>Conteúdo</th>
+    </tr>
+  </thead>
+  <% Log.limit(50).order(created_at: :desc).each do |log| %>
+    <tr>
+      <td width="10%"> <%= log.id_transaction %></td>
+      <td width="10%"> <%= t("activerecord.attributes.log.status.#{log.status}") %></td>
+      <td width="10%"> <%= l(log.created_at, format: :full) %></td>
+      <td width="70%" style="width: 70%;word-wrap: break-word;"> <%= log.content %></td>
+    </tr>
+  <% end %>
+</table>

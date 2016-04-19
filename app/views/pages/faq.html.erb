@@ -1,0 +1,60 @@
+<div style="background-image: url('<%= image_url('bg_section.jpg')%>'); background-size: cover;">
+  <section class="section-box" style="padding: 20px;padding-bottom: 0px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 how-it-works">
+          <h2 class="red pad-t-20">Perguntas Frequentes</h2>
+<!--           <h4>Clique nas perguntas abaixo para solucionar suas dúvidas</h4> -->
+          <div class="row">
+            <div class="col-md-10">
+              <div class="full-width">
+                <div class="default-container no-border-radius-top text-about">
+                  <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">1. Como faço para acessar o curso após o pagamento?</a></b><p/>
+                    <p class="">Para fazer um curso após o pagamento, basta acessar o site com seu login e senha e clicar na opção “Meus Pedidos e depois em “Iniciar o Curso”.</p>
+                  </div>
+                  <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">2. Como faço para comprar um curso?</a></b><p/>
+                    <p class="">Temos mais de 50 opções de cursos. Para verificar o curso que deseja, clique na opção "Módulos", escolher a área, o curso que deseja e depois clicar na opção "Comprar aula" ou “Comprar módulo".</p>
+                  </div>
+                  <!-- <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">3. Como faço para me cadastrar no curso?</a></b><p/>
+                    <p class="collapse">Temos mais de 500 opções de cursos. Para verificar o curso que deseja, clique na opção "Lista de Cursos", escolher a área, o curso que deseja e depois clicar na opção "Faça agora sua matricula".</p>
+                  </div> -->
+                  <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">3. Em quanto tempo ficará pronto meu certificado?</a></b><p/>
+                    <p class="">É possível imprimir o certificado logo após o pagamento do Módulo.</p>
+                  </div>
+                  <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">4. Em quanto tempo posso finalizar o curso?</a></b><p/>
+                    <p class="">Você pode finalizar o curso a qualquer momento, e enquanto tempo desejar.</p>
+                  </div>
+                  <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">5. O que vem detalhado no certificado especial?</a></b><p/>
+                    <p class="">Na frente do certificado consta o nome do aluno, nome do curso realizado, data de início e término do curso, carga horária, assinatura do diretor e selo de autenticidade.</p>
+                  </div>
+                  <div class="collapse-group">
+                    <p><b><a class="link-faq" href="#">6. Os cursos são online ou presencial?</a></b><p/>
+                    <p class="">Os cursos são online, você estuda e assiste o curso de qualquer computador e em qualquer lugar. Todo o pagamento e processo de matricula é feito exclusivamente online, do conforto de sua casa ou trabalho.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<br /><br /><br /><br />
+</div>
+
+<script>
+$(document).ready(function(){
+    $('.link-faq').on('click', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+    var $collapse = $this.closest('.collapse-group').find('.collapse');
+    $collapse.collapse('toggle');
+});
+});
+</script>

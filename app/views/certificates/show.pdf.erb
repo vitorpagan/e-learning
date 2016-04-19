@@ -1,0 +1,19 @@
+<div style="position: relative;">
+  <%= image_tag(@course.certificate.url.gsub('https','http')) %>
+  <p style="position: absolute; top: 472px;
+    left: 130px;
+    font-size: 24px;
+    font-family: Verdana;"><%= @current_user.name %></p>
+  <p style="position: absolute; top: 519px;
+    left: 130px;
+    font-size: 20px;
+    font-family: Verdana;"><%= Time.current.day %></p>
+    <p style="position: absolute; top: 519px;
+    left: 177px;
+    font-size: 20px;
+    font-family: Verdana;"><%= Time.current.month %></p>
+    <p style="position: absolute; top: 519px;
+    left: 220px;
+    font-size: 20px;
+    font-family: Verdana;"><%= Time.current.year %></p>
+</div>

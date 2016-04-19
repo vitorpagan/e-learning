@@ -1,0 +1,24 @@
+{
+  "name": "page",
+  "main": [
+    "./page.js",
+    "./page.min.js"
+  ],
+  "version": "0.3.0",
+  "homepage": "https://github.com/lucasmazza/page.js",
+  "authors": [
+    "Lucas Mazza <lucastmazza@gmail.com>"
+  ],
+  "description": "Running your javascript code, one page at a time.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "example",
+    "script",
+    "spec",
+    "Gruntfile.js",
+    "package.json"
+  ]
+}

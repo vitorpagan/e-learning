@@ -1,0 +1,241 @@
+pt-BR:
+  date:
+    formats:
+      short: "%d/%m/%Y"
+  time:
+    formats:
+      short: "%d/%m/%Y"
+      full: "%d/%m/%Y %H:%M:%S"
+  number:
+    currency:
+      format:
+        delimiter: .
+        format: ! '%u %n'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: R$
+
+    format:
+      separator: ','
+      delimiter: '.'
+  activerecord:
+    attributes:
+      user:
+        current_password: Senha atual
+        email: Email
+        name: Nome Completo
+        status: Ativo
+        password: Senha
+        password_confirmation: Confirme sua senha
+        remember_me: Lembre-se de mim
+      course:
+        name: Nome do Módulo
+        category: Categoria
+        level: Nível de Dificuldade
+        price: Preço
+        order_number: Ordenação
+        description: Descrição
+        active: Ativo
+      video_class:
+        title: Título
+        description: Descrição
+        duration: Duração
+        order: Ordem
+        price: Preço
+        professional: Profissional
+        handout: Apostila
+      category:
+        name: Nome
+        slug: Apelido
+      professional:
+        name: Nome Completo
+      public_target:
+        name: Nome
+      prerequisite:
+        name: Nome
+      order:
+        status:
+          pending: Pendente
+          approved: Aprovado
+          initiated: Iniciado
+          printed: Boleto Impresso
+          completed: Completo
+          canceled: Não autorizado
+          verifying: Em análise
+          refunded: Estornado
+        payment_method:
+          CartaoCredito: Cartão de Crédito
+          BoletoBancario: Boleto Bancário
+          DebitoBancario: Débito Bancário
+      log:
+        status:
+          pending: Pendente
+          approved: Aprovado
+          initiated: Iniciado
+          printed: Boleto Impresso
+          completed: Completo
+          canceled: Não autorizado
+          verifying: Em análise
+          refunded: Estornado
+    models:
+      user: Usuário
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: E-mail não pode ficar em branco
+              invalid: E-mail inválido
+              taken: E-mail já cadastrado
+            password:
+              too_short: A senha precisa ter pelo menos 8 dígitos
+              blank: Senha não pode ficar em branco
+            password_confirmation:
+              confirmation: As senhas digitadas são diferentes
+              blank: Confirmação de senha não pode ficar em branco
+            name:
+              blank: Nome não pode ficar em branco
+              invalid: Nome inválido
+            phone:
+              blank: Telefone não pode ficar em branco
+              invalid: Telefone inválido
+        public_target:
+          attributes:
+            name:
+              blank: Nome não pode ficar em branco
+              invalid: Nome inválido
+        prerequisite:
+          attributes:
+            name:
+              blank: Nome não pode ficar em branco
+              invalid: Nome inválido
+        professional:
+          attributes:
+            name:
+              blank: Nome não pode ficar em branco
+              invalid: Nome inválido
+        category:
+          attributes:
+            name:
+              blank: Nome não pode ficar em branco
+              invalid: Nome inválido
+        course:
+          attributes:
+            name:
+              blank: Nome do módulo não pode ficar em branco
+              invalid: Nome inválido
+            level:
+              blank: Nível do módulo não pode ficar em branco
+              invalid: Nível inválido
+        video_class:
+          attributes:
+            title:
+              blank: Título não pode ficar em branco
+              invalid: Título inválido
+            description:
+              blank: Descrição não pode ficar em branco
+              invalid: Descrição inválida
+            duration:
+              blank: Duração não pode ficar em branco
+              invalid: Duração inválida
+            professional:
+              blank: Profissional não pode ficar em branco
+              invalid: Profissional inválida
+        credit_card:
+          attributes:
+            name:
+              blank: Preencha o nome como está escrito no cartão
+              too_short: Nome inválido
+            number:
+              blank: Preencha o número do cartão
+              too_short: Número inválido
+            cvv:
+              blank: Preencha o código de segurança
+              too_short: Número inválido
+            expiration_year:
+              blank: Preencha o ano de expiração
+            expiration_month:
+              blank: Preencha o mês de expiração
+  devise:
+    confirmations:
+      new:
+        resend_confirmation_instructions: Reenviar instruções de confirmação
+    mailer:
+      confirmation_instructions:
+        action: Confirmar minha conta
+        greeting: Bem-vindo %{recipient}!
+        instruction: 'Você pode confirmar sua conta através do link abaixo:'
+      reset_password_instructions:
+        action: Redefinir minha senha
+        greeting: Olá %{recipient}!
+        instruction: Alguém fez o pedido para redefinir sua senha, e você pode fazer isso clicando no link abaixo.
+        instruction_2: Se você não fez este pedido, por favor ignore este e-mail.
+        instruction_3: Sua senha não será alterada até que você acesse o link abaixo e crie uma nova.
+      unlock_instructions:
+        action: Desbloquear minha conta
+        greeting: Olá %{recipient}!
+        instruction: 'Clique no link abaixo para desbloquear sua conta:'
+        message: Sua conta foi bloqueada devido ao excessivo número de tentativas acesso inválidas.
+    passwords:
+      edit:
+        change_my_password: Alterar minha senha
+        change_your_password: Alterar sua senha
+        confirm_new_password: Confirme sua nova senha
+        new_password: Nova senha
+      new:
+        forgot_your_password: Esqueceu sua senha?
+        send_me_reset_password_instructions: Enviar instruções para redefinição da senha
+    registrations:
+      edit:
+        are_you_sure: Você tem certeza?
+        cancel_my_account: Cancelar minha conta
+        currently_waiting_confirmation_for_email: 'No momento esperando por: %{email}'
+        leave_blank_if_you_don_t_want_to_change_it: deixe em branco caso não queira alterá-la
+        title: Editar %{resource}
+        unhappy: Não está contente
+        update: Atualizar
+        we_need_your_current_password_to_confirm_your_changes: precisamos da sua senha atual para confirmar suas mudanças
+      new:
+        sign_up: Inscrever-se
+    users:
+      new:
+    sessions:
+      new:
+        sign_in: Login
+      user:
+        signed_in: Usuário entrou
+    shared:
+      links:
+        back: Voltar
+        didn_t_receive_confirmation_instructions: Não recebeu instruções de confirmação?
+        didn_t_receive_unlock_instructions: Não recebeu instruções de desbloqueio?
+        forgot_your_password: Esqueceu sua senha?
+        sign_in: Login
+        sign_in_with_provider: Entrar com %{provider}
+        sign_up: Inscrever-se
+    unlocks:
+      new:
+        resend_unlock_instructions: Reenviar instruções de desbloqueio
+  views:
+    pagination:
+      first: "&laquo; Primeira"
+      last: "Última &raquo;"
+      previous: "&lsaquo; Anterior"
+      next: "Próxima &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Nenhum(a) %{entry_name} encontrado(a)"
+          one: "Exibindo <b>1</b> %{entry_name}"
+          other: "Exibindo <b>todas %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Exibindo %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> de <b>%{total}</b> no total"
+  user_mailer:
+    created:
+      subject: "Sua conta foi criada com sucesso!"
+    activated:
+      subject: "Sua conta foi ativada com sucesso!"

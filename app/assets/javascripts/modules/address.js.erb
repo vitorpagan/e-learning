@@ -1,0 +1,66 @@
+window.app = window.app || {};
+
+(function(app, $) {
+
+  function Address(zipcodeSelector) {
+    var instance = this;
+
+    this.zipcodeField = $(zipcodeSelector);
+    this.containerHelper = $(this.zipcodeField.data("helper"));
+    this.maskOptions = {
+      placeholder: "_____-___",
+      clearIfNotMatch: true,
+      onComplete: $.proxy(instance, 'fetchAddressInfo')
+    }
+
+    this.bindEvents();
+  }
+
+  var fn = Address.prototype;
+
+  fn.bindEvents = function() {
+    this.zipcodeField.mask('99999-999', this.maskOptions);
+  }
+
+  fn.onSuccess = function(data) {
+    this.containerHelper.slideUp(100);
+    this.showAddress(data);
+  }
+
+  fn.onError = function(xhr) {
+    if (!this.containerHelper.is(":visible")) {
+      if (xhr.status == 404) {
+        this.containerHelper.text(I18n.t("errors.not_found"));
+      } else {
+        this.containerHelper.text(I18n.t("errors.server_down"));
+      }
+      this.containerHelper.show(100);
+    }
+    this.showAddress({bairro: "", uf: "", localidade: "", logradouro: "", pais: ""});
+  }
+
+  fn.showAddress = function(data) {
+    $("[data-zipcode-callback='country']").val(data.country);
+    $("[data-zipcode-callback='district']").val(data.district);
+    $("[data-zipcode-callback='state']").val(data.state);
+    $("[data-zipcode-callback='city']").val(data.city);
+    $("[data-zipcode-callback='address']").val(data.address);
+  }
+
+  fn.fetchAddressInfo = function(zipcode) {
+    var zipcodeVal = zipcode.replace(/[^0-9]/g, "");
+    var searchAddressUrl = this.zipcodeField.data("search-address-path") + "/{cep}.json".interpolate({cep:zipcodeVal});
+    this.zipcodeField.blur();
+    this.containerHelper.hide(100);
+
+    $.ajax({
+      url: searchAddressUrl,
+      timeout: "<%= AddressService::TIMEOUT * 1000 %>",
+      success: $.proxy(this, 'onSuccess'),
+      error: $.proxy(this, 'onError')
+    });
+  }
+
+  app.Address = Address;
+
+}(window.app, window.jQuery));
